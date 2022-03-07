@@ -1,1 +1,89 @@
-/* Juego Tetris */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.containerA {
+  background-image: url("./img/imgGames80.jpg");
+  height: 610px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.containertext1 {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 63%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  border-color: coral;
+}
+
+.titleHead{
+  font-size: 400%;
+  font-family: 'Press Start 2P', cursive;
+  font-weight: 1;
+}
+
+.tetris {
+  float: right;
+  border-collapse: collapse;
+  position: absolute;
+  top: 80px;
+  left: 150px;
+  border-radius: 5%;
+}
+
+.tetris tr td {
+  width: 25px;
+  height: 25px;
+  padding: 0px;
+}
+.celda0 {
+  background-color: #d6d6d6;
+}
+.celda1 {
+  background-color: #0000ff;
+}
+.celda2 {
+  background-color: #ff0000;
+}
+.celda3 {
+  background-color: #00ff00;
+}
+.celda4 {
+  background-color: #ffff00;
+}
+.celda5 {
+  background-color: #00ffff;
+}
+.celda6 {
+  background-color: #ff00ff;
+}
+.celda7 {
+  background-color: #888888;
+}
+
+.footer{
+  color: #000;
+  background:#838383;
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  margin-top: 34.1rem;
+  
+  
+}

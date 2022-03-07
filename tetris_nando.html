@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css">
+
+  <title> Tetris | Nando Devprog </title>
+
+  <style type="text/css"> </style>
+
+</head>
+
+<body onload="eventoCargar()" onkeydown="tecla(event)">
+
+  <div class="containerA">
+
+    <div id="tetris"></div>
+    <div class="containertext1">
+      <h1 class="titleHead"> Bienvenidos al Tetris </h1>
+      <h2>El Juego Clasico de los 80`s</h2>
+    </div>
+
+    <section class="footer">
+      <p>Tetris para bootcamp programate</p>
+      <p>Hernando Silva Leal</p>
+      <p>2022©</p>
+  </div>
+  </section>
+
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+<!--     
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var x = canvas.width / 2;
+      var dx = 5;
+      var y = canvas.height - 30;
+      var dy = -5;
+      var ballRadius = 10;
+      var paddleHeight = 10;
+      var paddleWidth = 75;
+      var paddleX = (canvas.width - paddleWidth) / 2;
+      var rightPressed = false;
+      var leftPressed = false;
+      var brickRowCount = 5; // Cantidad de Filas
+      var brickColumnCount = 6; // Cantidad de Columnas
+      var brickWidth = 75; // El ancho de cada bloque
+      var brickHeight = 20; // El alto de cada bloque
+      var brickPadding = 10; // Relleno interno que dará es inter espaciado
+      var brickOffsetTop = 30; // Para que no se dibujen tocando arriba
+      var brickOffsetLeft = 30; // Para que no se dibujen tocando abajo
+      var bricks = [];
+      for (c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for (r = 0; r < brickRowCount; r++) {
+          bricks[c][r] = { x: 0, y: 0, status: 1 };
+        }
+      }
+
+      document.addEventListener("keydown", keyDownHandler, false);
+      document.addEventListener("keyup", keyUpHandler, false);
+
+      function keyDownHandler(e) {
+        //Tecla Oprimida
+        if (e.keyCode == 39) {
+          rightPressed = true;
+        } else if (e.keyCode == 37) {
+          leftPressed = true;
+        }
+      }
+
+      function keyUpHandler(e) {
+        // Tecla Liberada
+        if (e.keyCode == 39) {
+          rightPressed = false;
+        } else if (e.keyCode == 37) {
+          leftPressed = false;
+        }
+      }
+
+      function collisionDetection() {
+        // Deteccion de coliciones de la bola con los ladrillos
+        for (c = 0; c < brickColumnCount; c++) {
+          for (r = 0; r < brickRowCount; r++) {
+            var b = bricks[c][r];
+            if (b.status == 1) {
+              if (
+                x > b.x &&
+                // La posición "x" de la bola es mayor que la posición "x" del ladrillo
+                x < b.x + brickWidth &&
+                //La posición "x" de la bola es menor que la posición del ladrillo más el ancho del ladrillo
+                y > b.y &&
+                //La posición "y" de la bola es mayor que la posición "y" del ladrillo.
+                y < b.y + brickHeight
+                // La posición "y" de la bola es menor que la posición del ladrillo más su altura.
+              ) {
+                dy = -dy;
+              }
+            }
+          }
+        }
+      }
+
+      function drawBall() {
+        // Modularizacion del Codigo, aqui e dibuja la bolita.
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawPaddle() {
+        // Aqui se pinta la linea de rebote.
+        ctx.beginPath();
+        ctx.rect(
+          paddleX,
+          canvas.height - paddleHeight,
+          paddleWidth,
+          paddleHeight
+        );
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawBricks() {
+        for (c = 0; c < brickColumnCount; c++) {
+          for (r = 0; r < brickRowCount; r++) {
+            if (bricks[c][r].status == 1) {
+              var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+              var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+              bricks[c][r].x = brickX;
+              bricks[c][r].y = brickY;
+              ctx.beginPath();
+              ctx.rect(brickX, brickY, brickWidth, brickHeight);
+              ctx.fillStyle = "#0095DD";
+              ctx.fill();
+              ctx.closePath();
+            }
+          }
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //Limpio
+        drawBricks();
+        drawBall(); // Pinto
+        drawPaddle();
+        collisionDetection();
+
+        if (x + dx < ballRadius || x + dx > canvas.width - ballRadius) {
+          dx = -dx; // Evalua X respecto al ANCHOCEROIzq y al ANCHODer  para rebotar.
+        }
+        if (y + dy < ballRadius) {
+          dy = -dy; // Evalua Y respecto al ALTOCEROTecho para rebotar.
+        } else if (y + dy > canvas.height - ballRadius) {
+          // Evalua Y respecto al ALTOPiso
+          if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+          } else {
+            alert("Game Over");
+            document.location.reload();
+          }
+          
+
+
+        }
+
+        if (rightPressed && paddleX < canvas.width - paddleWidth) {
+          paddleX += 7;
+        } else if (leftPressed && paddleX > 0) {
+          paddleX -= 7;
+        }
+
+        x += dx; // Incremento respecto a borde lateral izq X
+        y += dy; // Decremento respecto a borde superior Y
+      }
+
+      setInterval(draw, 1);
+    </script>
+
+
+
+setInterval
+
+addEventListener 
+
+Keypress 
+
+this
+
+objetos
+
+arrays
+
+
+
+
+
+
+
+
+-->
